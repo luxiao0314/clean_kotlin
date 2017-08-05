@@ -1,6 +1,7 @@
 package cn.haohao.dbbook.presentation.activity
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
@@ -8,7 +9,6 @@ import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.graphics.Palette
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -34,7 +34,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.animation.GlideAnimation
 import com.bumptech.glide.request.target.SimpleTarget
 import kotlinx.android.synthetic.main.activity_book_detail.*
-import org.jetbrains.anko.backgroundColor
 import javax.inject.Inject
 
 
@@ -104,7 +103,7 @@ class BookDetailActivity : BaseActivity(), BookDetailView, RecommendedBooksView,
                     true
                 }
                 else -> super.onOptionsItemSelected(item)
-    }
+            }
 
     override fun onBackPressed() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -199,7 +198,7 @@ class BookDetailActivity : BaseActivity(), BookDetailView, RecommendedBooksView,
             }
         }
 
-        coverImgBitmap?:let {
+        coverImgBitmap ?: let {
             Glide.with(this)
                     .load(mBookInfoResponse.images.large)
                     .asBitmap()
@@ -214,6 +213,7 @@ class BookDetailActivity : BaseActivity(), BookDetailView, RecommendedBooksView,
 
         mBookDetailPresenter.execute(RequestDetailParams(mBookInfoResponse.id, PAGE * REVIEWS_COUNT, REVIEWS_COUNT, COMMENT_FIELDS))
 
+        fab.setOnClickListener { startActivity(Intent(this, AnimeInfoActivity::class.java)) }
     }
 
     @SuppressLint("NewApi")
