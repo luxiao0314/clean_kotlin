@@ -5,6 +5,7 @@ import cn.haohao.dbbook.data.datasource.BookDataSource
 import cn.haohao.dbbook.di.qualifier.CloudDataQualifier
 import cn.haohao.dbbook.domain.executor.PostExecutionThread
 import cn.haohao.dbbook.domain.executor.ThreadExecutor
+import cn.haohao.dbbook.domain.interactor.GetAnimeInteractor
 import cn.haohao.dbbook.domain.interactor.GetBookDetailInteractor
 import cn.haohao.dbbook.domain.interactor.GetBookListInteractor
 import cn.haohao.dbbook.domain.interactor.GetRecommendedBooksInteractor
@@ -34,5 +35,11 @@ class DomainModule {
                                 threadExecutor: ThreadExecutor,
                                 postExecutionThread: PostExecutionThread) =
             GetRecommendedBooksInteractor(bookDataSource, threadExecutor, postExecutionThread)
+
+    @Provides
+    fun provideAnimeInfoInteractor(@CloudDataQualifier bookDataSource: BookDataSource,
+                                threadExecutor: ThreadExecutor,
+                                postExecutionThread: PostExecutionThread) =
+            GetAnimeInteractor(bookDataSource, threadExecutor, postExecutionThread)
 
 }

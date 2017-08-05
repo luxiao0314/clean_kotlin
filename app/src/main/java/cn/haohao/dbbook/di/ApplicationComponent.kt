@@ -1,5 +1,7 @@
 package cn.haohao.dbbook.di
 
+import cn.haohao.dbbook.di.subcomponent.anime.AnimeInfoActivityComponent
+import cn.haohao.dbbook.di.subcomponent.anime.AnimeInfoActivityModule
 import cn.haohao.dbbook.di.subcomponent.comment.BookCommentActivityComponent
 import cn.haohao.dbbook.di.subcomponent.comment.BookCommentActivityModule
 import cn.haohao.dbbook.di.subcomponent.detail.BookDetailActivityComponent
@@ -25,4 +27,5 @@ interface ApplicationComponent {
     fun plus(module: BookDetailActivityModule): BookDetailActivityComponent
     fun plus(module: BookCommentActivityModule): BookCommentActivityComponent
     fun plus(module: SearchActivityModule): SearchActivityComponent
+    fun plus(module: AnimeInfoActivityModule): AnimeInfoActivityComponent
 }
