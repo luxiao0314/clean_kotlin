@@ -1,11 +1,12 @@
 package cn.haohao.dbbook.di
 
 import android.content.Context
-import android.media.tv.TvRecordingClient
 import cn.haohao.dbbook.BuildConfig
 import cn.haohao.dbbook.data.BookService
+import cn.haohao.dbbook.data.DmzjService
 import cn.haohao.dbbook.data.datasource.BookDataSource
 import cn.haohao.dbbook.data.datasource.cloud.CloudBookDataSource
+import cn.haohao.dbbook.data.datasource.cloud.CloudDmzjDataSource
 import cn.haohao.dbbook.data.net.RequestInterceptor
 import cn.haohao.dbbook.data.net.ResponseInterceptor
 import cn.haohao.dbbook.di.qualifier.ApplicationQualifier
@@ -47,21 +48,35 @@ class DataModule {
                         level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
                     }).build()
 
-    @Provides @Singleton
-    fun provideRestAdapter(client: OkHttpClient): Retrofit =
-            Retrofit.Builder()
-                    .baseUrl(BookService.BASE_URL)
-                    .client(client)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                    .build()
+//    @Provides @Singleton
+//    fun provideRestAdapter(client: OkHttpClient): Retrofit =
+//            retrofit(client,BookService.BASE_URL)
 
     @Provides @Singleton
-    fun provideBookService(retrofit: Retrofit): BookService =
-            retrofit.create(BookService::class.java)
+    fun provideBookService(client: OkHttpClient): BookService =
+            retrofit(client,BookService.BASE_URL)
+                    .create(BookService::class.java)
 
     @Provides @Singleton @CloudDataQualifier
     fun provideBookDataSource(bookService: BookService): BookDataSource =
             CloudBookDataSource(bookService)
+
+    @Provides @Singleton
+    fun provideDmzjService(dmzjClient: OkHttpClient): DmzjService =
+            retrofit(dmzjClient,DmzjService.BASE_URL)
+                    .create(DmzjService::class.java)
+//
+    @Provides @Singleton @CloudDataQualifier
+    fun provideDmzjDataSource(dmzjService: DmzjService): CloudDmzjDataSource =
+            CloudDmzjDataSource(dmzjService)
+
+    private fun retrofit(client: OkHttpClient, baseUrl: String): Retrofit {
+        return Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .build()
+    }
 
 }
