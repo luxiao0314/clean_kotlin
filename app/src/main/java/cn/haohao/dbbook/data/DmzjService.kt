@@ -1,5 +1,10 @@
 package cn.haohao.dbbook.data
 
+import cn.haohao.dbbook.data.entity.http.AnimeBannerResponse
+import retrofit2.Response
+import retrofit2.http.GET
+import rx.Observable
+
 /**
  * @Description
  * @Author luxiao418
@@ -11,4 +16,7 @@ interface DmzjService {
     companion object {
         val BASE_URL = "http://v2.api.dmzj.com/"
     }
+
+    @GET("article/recommend/header.json")
+    fun getAnimeBanner(): Observable<Response<AnimeBannerResponse>>
 }

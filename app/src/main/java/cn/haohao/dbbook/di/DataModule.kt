@@ -5,6 +5,7 @@ import cn.haohao.dbbook.BuildConfig
 import cn.haohao.dbbook.data.BookService
 import cn.haohao.dbbook.data.DmzjService
 import cn.haohao.dbbook.data.datasource.BookDataSource
+import cn.haohao.dbbook.data.datasource.DmzjDataSource
 import cn.haohao.dbbook.data.datasource.cloud.CloudBookDataSource
 import cn.haohao.dbbook.data.datasource.cloud.CloudDmzjDataSource
 import cn.haohao.dbbook.data.net.RequestInterceptor
@@ -54,20 +55,22 @@ class DataModule {
 
     @Provides @Singleton
     fun provideBookService(client: OkHttpClient): BookService =
-            retrofit(client,BookService.BASE_URL)
+            retrofit(client, BookService.BASE_URL)
                     .create(BookService::class.java)
 
     @Provides @Singleton @CloudDataQualifier
     fun provideBookDataSource(bookService: BookService): BookDataSource =
             CloudBookDataSource(bookService)
 
+    /**动漫之家,每一个通过dagger提供的对象,都可以通过dagger定义方法在参数中取到Provides**/
+
     @Provides @Singleton
     fun provideDmzjService(dmzjClient: OkHttpClient): DmzjService =
-            retrofit(dmzjClient,DmzjService.BASE_URL)
+            retrofit(dmzjClient, DmzjService.BASE_URL)
                     .create(DmzjService::class.java)
-//
+
     @Provides @Singleton @CloudDataQualifier
-    fun provideDmzjDataSource(dmzjService: DmzjService): CloudDmzjDataSource =
+    fun provideDmzjDataSource(dmzjService: DmzjService): DmzjDataSource =
             CloudDmzjDataSource(dmzjService)
 
     private fun retrofit(client: OkHttpClient, baseUrl: String): Retrofit {

@@ -1,5 +1,9 @@
 package cn.haohao.dbbook.data.datasource
 
+import cn.haohao.dbbook.data.entity.http.AnimeBannerResponse
+import retrofit2.Response
+import rx.Observable
+
 /**
  * @Description
  * @Author luxiao418
@@ -8,4 +12,6 @@ package cn.haohao.dbbook.data.datasource
  * @Version
  */
 
-interface DmzjDataSource{}
+interface DmzjDataSource{
+    fun getAnimeBanner(): Observable<Response<AnimeBannerResponse>>
+}

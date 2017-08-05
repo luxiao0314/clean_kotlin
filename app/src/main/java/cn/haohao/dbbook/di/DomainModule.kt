@@ -2,6 +2,7 @@ package cn.haohao.dbbook.di
 
 
 import cn.haohao.dbbook.data.datasource.BookDataSource
+import cn.haohao.dbbook.data.datasource.DmzjDataSource
 import cn.haohao.dbbook.di.qualifier.CloudDataQualifier
 import cn.haohao.dbbook.domain.executor.PostExecutionThread
 import cn.haohao.dbbook.domain.executor.ThreadExecutor
@@ -32,14 +33,15 @@ class DomainModule {
 
     @Provides
     fun provideRecommendedBooksInteractor(@CloudDataQualifier bookDataSource: BookDataSource,
-                                threadExecutor: ThreadExecutor,
-                                postExecutionThread: PostExecutionThread) =
+                                          threadExecutor: ThreadExecutor,
+                                          postExecutionThread: PostExecutionThread) =
             GetRecommendedBooksInteractor(bookDataSource, threadExecutor, postExecutionThread)
 
+    //通过dagger提供的对象,都可以在dagger中获取,见dataModule
     @Provides
-    fun provideAnimeInfoInteractor(@CloudDataQualifier bookDataSource: BookDataSource,
-                                threadExecutor: ThreadExecutor,
-                                postExecutionThread: PostExecutionThread) =
-            GetAnimeInteractor(bookDataSource, threadExecutor, postExecutionThread)
+    fun provideAnimeInfoInteractor(@CloudDataQualifier dmzjDataSource: DmzjDataSource,
+                                   threadExecutor: ThreadExecutor,
+                                   postExecutionThread: PostExecutionThread) =
+            GetAnimeInteractor(dmzjDataSource, threadExecutor, postExecutionThread)
 
 }

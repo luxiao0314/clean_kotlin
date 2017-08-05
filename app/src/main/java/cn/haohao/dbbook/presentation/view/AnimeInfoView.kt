@@ -1,6 +1,6 @@
 package cn.haohao.dbbook.presentation.view
 
-import cn.haohao.dbbook.data.entity.http.BookListResponse
+import cn.haohao.dbbook.data.entity.http.AnimeBannerResponse
 
 /**
  * @Description
@@ -10,5 +10,5 @@ import cn.haohao.dbbook.data.entity.http.BookListResponse
  * @Version
  */
 interface AnimeInfoView :PresentationView{
-    fun showDetailData(body: BookListResponse?)
+    fun showDetailData(body: List<AnimeBannerResponse.DataBean>?)
 }

@@ -3,10 +3,10 @@ package cn.haohao.dbbook.presentation.activity
 import android.os.Bundle
 import android.view.MenuItem
 import cn.haohao.dbbook.R
-import cn.haohao.dbbook.data.entity.http.BookListResponse
+import cn.haohao.dbbook.data.entity.http.AnimeBannerResponse
 import cn.haohao.dbbook.di.ApplicationComponent
 import cn.haohao.dbbook.di.subcomponent.anime.AnimeInfoActivityModule
-import cn.haohao.dbbook.domain.entity.RequestListParams
+import cn.haohao.dbbook.domain.entity.RequestAnimeBannerParams
 import cn.haohao.dbbook.presentation.presenter.AnimeInfoPresenter
 import cn.haohao.dbbook.presentation.view.AnimeInfoView
 import kotlinx.android.synthetic.main.activity_anime_info.*
@@ -26,7 +26,7 @@ class AnimeInfoActivity : BaseActivity(), AnimeInfoView {
     }
 
     private fun initData() {
-        animeInfoPresenter.execute(RequestListParams("","",0,0,""))
+        animeInfoPresenter.execute(RequestAnimeBannerParams())
     }
 
     override fun injectDependencies(applicationComponent: ApplicationComponent) {
@@ -56,6 +56,6 @@ class AnimeInfoActivity : BaseActivity(), AnimeInfoView {
     override fun hideProgressView() {
     }
 
-    override fun showDetailData(body: BookListResponse?) {
+    override fun showDetailData(body: List<AnimeBannerResponse.DataBean>?) {
     }
 }
