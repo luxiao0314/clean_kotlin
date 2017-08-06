@@ -59,6 +59,7 @@ dependencies {
     compile "com.android.support:cardview-v7:$supportVersion"
     compile "com.android.support:palette-v7:$supportVersion"
     compile "com.android.support:design:$supportVersion"
+    compile "com.android.support:support-v4:$supportVersion"
     androidTestCompile "com.android.support:support-annotations:$supportVersion"
 
     // OkHttp
@@ -107,4 +108,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
 
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha9'
+
+    compile 'cn.bingoogolapple:bga-banner:2.1.7@aar'
+
 }

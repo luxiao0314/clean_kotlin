@@ -2,15 +2,19 @@ package cn.haohao.dbbook.presentation.activity
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.ImageView
 import cn.haohao.dbbook.R
 import cn.haohao.dbbook.data.entity.http.AnimeBannerResponse
 import cn.haohao.dbbook.di.ApplicationComponent
 import cn.haohao.dbbook.di.subcomponent.anime.AnimeInfoActivityModule
 import cn.haohao.dbbook.domain.entity.RequestAnimeBannerParams
 import cn.haohao.dbbook.presentation.presenter.AnimeInfoPresenter
+import cn.haohao.dbbook.presentation.util.showToast
 import cn.haohao.dbbook.presentation.view.AnimeInfoView
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_anime_info.*
 import javax.inject.Inject
+
 
 class AnimeInfoActivity : BaseActivity(), AnimeInfoView {
 
@@ -48,6 +52,7 @@ class AnimeInfoActivity : BaseActivity(), AnimeInfoView {
     }
 
     override fun onError(error: String) {
+        showToast(error)
     }
 
     override fun showProgressView() {
@@ -56,6 +61,16 @@ class AnimeInfoActivity : BaseActivity(), AnimeInfoView {
     override fun hideProgressView() {
     }
 
+    var urls = ArrayList<String>()
     override fun showDetailData(body: List<AnimeBannerResponse.DataBean>?) {
+        for (item in body!!) {
+            urls.add(item.pic_url!!)
+        }
+        bannerView.setData(R.layout.item_banner_view, urls, null)
+        bannerView.setAdapter { banner, itemView, model, position ->
+            Glide.with(BaseActivity.instance)
+                    .load(model)
+                    .into(itemView.findViewById(R.id.iv_content) as ImageView)
+        }
     }
 }

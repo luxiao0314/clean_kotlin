@@ -32,7 +32,6 @@ class AnimeInfoPresenter(override var view: AnimeInfoView, var animeInteractor: 
                     }
                 }
                 view.hideProgressView()
-
             }
 
             override fun onCompleted() {
@@ -44,7 +43,6 @@ class AnimeInfoPresenter(override var view: AnimeInfoView, var animeInteractor: 
                     view.onError(e.getStackTraceString())
                 }
                 view.hideProgressView()
-
             }
 
         }, params)

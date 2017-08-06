@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="cn.haohao.dbbook.presentation.activity.AnimeInfoActivity">
+    android:fitsSystemWindows="true"
+    tools:context=".presentation.activity.AnimeInfoActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -18,8 +19,20 @@
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimary"
             android:minHeight="?attr/actionBarSize"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/AppTheme.PopupOverlay"/>
     </android.support.design.widget.AppBarLayout>
 
-</android.support.constraint.ConstraintLayout>
+    <cn.bingoogolapple.bgabanner.BGABanner
+        android:id="@+id/bannerView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:banner_pageChangeDuration="1000"
+        app:banner_pointAutoPlayAble="false"
+        app:banner_pointContainerBackground="@android:color/transparent"
+        app:banner_pointDrawable="@drawable/bga_banner_selector_point_hollow"
+        app:banner_pointTopBottomMargin="15dp"
+        app:banner_transitionEffect="alpha"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+</android.support.design.widget.CoordinatorLayout>
