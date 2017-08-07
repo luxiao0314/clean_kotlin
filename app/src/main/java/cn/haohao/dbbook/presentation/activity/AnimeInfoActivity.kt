@@ -1,8 +1,10 @@
 package cn.haohao.dbbook.presentation.activity
 
 import android.os.Bundle
+import android.support.v7.widget.CardView
 import android.view.MenuItem
 import android.widget.ImageView
+import cn.bingoogolapple.bgabanner.BGABanner
 import cn.haohao.dbbook.R
 import cn.haohao.dbbook.data.entity.http.AnimeBannerResponse
 import cn.haohao.dbbook.di.ApplicationComponent
@@ -12,6 +14,8 @@ import cn.haohao.dbbook.presentation.presenter.AnimeInfoPresenter
 import cn.haohao.dbbook.presentation.util.showToast
 import cn.haohao.dbbook.presentation.view.AnimeInfoView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.model.GlideUrl
+import com.bumptech.glide.load.model.Headers
 import kotlinx.android.synthetic.main.activity_anime_info.*
 import javax.inject.Inject
 
@@ -61,16 +65,22 @@ class AnimeInfoActivity : BaseActivity(), AnimeInfoView {
     override fun hideProgressView() {
     }
 
-    var urls = ArrayList<String>()
     override fun showDetailData(body: List<AnimeBannerResponse.DataBean>?) {
-        for (item in body!!) {
-            urls.add(item.pic_url!!)
-        }
+        val urls = ArrayList<String>()
+        body!!.mapTo(urls) { it -> it.pic_url!! }
         bannerView.setData(R.layout.item_banner_view, urls, null)
-        bannerView.setAdapter { banner, itemView, model, position ->
-            Glide.with(BaseActivity.instance)
-                    .load(model)
-                    .into(itemView.findViewById(R.id.iv_content) as ImageView)
-        }
+        bannerView.setAdapter(object : BGABanner.Adapter<CardView, String> {
+            override fun fillBannerItem(banner: BGABanner, itemView: CardView, model: String, position: Int) {
+                val glideUrl = GlideUrl(model, Headers {
+                    val header = HashMap<String, String>()
+                    header.put("Referer", "http://v2.api.dmzj.com")
+                    header
+                })
+                Glide.with(BaseActivity.instance)
+                        .load(glideUrl)
+                        .placeholder(R.drawable.app_logo)
+                        .into(itemView.findViewById(R.id.iv_content) as ImageView)
+            }
+        })
     }
 }
